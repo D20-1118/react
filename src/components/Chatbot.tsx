@@ -8,7 +8,7 @@ interface Message {
   retry?: boolean;
   isLoading?: boolean;
   error?: boolean;
-  streamId?: string; // 唯一标识符
+  streamId?: string; 
 }
 
 function Chatbot() {
