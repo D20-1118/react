@@ -1,0 +1,364 @@
+{
+    "knowledge_base": [
+      {
+        "id": 1,
+        "title": "ROS2参数通信基础",
+        "content": "ROS2参数是节点的配置值，通过键值对形式存储，支持bool、int、float、string等类型。可通过`ros2 param`命令行工具查看和修改参数。",
+        "categories": ["ROS2基础", "参数通信"],
+        "related_terms": ["ros2 param list", "节点设置"],
+        "references": ["知识库条目1", "ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 2,
+        "title": "ROS2参数类型详解",
+        "content": "参数值类型包括：bool、int64、float64、string、数组类型（如bool[]、int64[]）及字节流（byte[]）。例如，可通过`ros2 param set <node_name> <param_name> <value>`设置参数。",
+        "categories": ["ROS2参数", "数据类型"],
+        "related_terms": ["参数设置", "ros2 param set"],
+        "references": ["知识库条目1"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 3,
+        "title": "小乌龟模拟器参数体验",
+        "content": "运行`ros2 run turtlesim turtlesim_node`启动乌龟模拟器后，使用`ros2 param list`查看节点参数列表，如背景颜色、更新频率等。",
+        "categories": ["ROS2示例", "参数调试"],
+        "related_terms": ["turtlesim", "参数列表"],
+        "references": ["知识库条目1"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 4,
+        "title": "ROS2控制器配置流程",
+        "content": "控制器配置需通过参数文件（如`controller_config.yaml`）定义PID参数、关节名称等，使用`ros2 control`工具加载配置。",
+        "categories": ["机器人控制", "配置管理"],
+        "related_terms": ["ros2 control load_controller"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 5,
+        "title": "ROS2系统安装步骤",
+        "content": "Ubuntu系统安装需更换源（如阿里云镜像）、安装ROS2 Humble、配置环境变量，并安装依赖工具（如Terminator、VSCode）。",
+        "categories": ["系统配置", "安装指南"],
+        "related_terms": ["sudo apt install", "更换源"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 6,
+        "title": "ROS2参数动态修改",
+        "content": "在运行时动态修改参数值，例如：`ros2 param set /turtlesim background_r 200`可实时调整乌龟模拟器背景颜色。",
+        "categories": ["参数调试", "实时控制"],
+        "related_terms": ["ros2 param set", "动态修改"],
+        "references": ["知识库条目1"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 7,
+        "title": "ROS2节点管理命令",
+        "content": "常用命令包括：`ros2 node list`（列出节点）、`ros2 node info <node_name>`（查看节点信息）、`ros2 service list`（列出服务）。",
+        "categories": ["ROS2调试", "命令行工具"],
+        "related_terms": ["ros2 node", "节点管理"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 8,
+        "title": "ROS2控制器调试技巧",
+        "content": "使用`ros2 topic echo /joint_states`查看关节状态，通过`ros2 topic pub`发送控制指令进行闭环测试。",
+        "categories": ["机器人控制", "调试方法"],
+        "related_terms": ["ros2 topic", "关节状态"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 9,
+        "title": "ROS2参数文件配置",
+        "content": "参数文件（`.yaml`）示例：\n```yaml\ncontroller_name:\n  type: position_controllers/JointTrajectoryController\n  joints: [joint1, joint2]```",
+        "categories": ["配置文件", "控制器设置"],
+        "related_terms": ["yaml格式", "控制器配置"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 10,
+        "title": "ROS2依赖管理",
+        "content": "安装`make`、`cmake`、`colcon`工具：`sudo apt install make cmake python3-colcon-common-extensions`。",
+        "categories": ["系统配置", "工具安装"],
+        "related_terms": ["依赖安装", "colcon"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 11,
+        "title": "ROS2节点间通信",
+        "content": "通过`ros2 topic`发布/订阅消息，例如：`ros2 topic pub /cmd_vel geometry_msgs/msg/Twist '{linear: {x: 0.5}}'`控制机器人移动。",
+        "categories": ["ROS2通信", "话题机制"],
+        "related_terms": ["ros2 topic pub", "Twist消息"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 12,
+        "title": "ROS2系统网络配置",
+        "content": "若Ubuntu无法识别网卡，可通过USB-以太网转换器连接网络，安装后驱动会自动更新。",
+        "categories": ["网络配置", "系统安装"],
+        "related_terms": ["网卡驱动", "USB-以太网"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 13,
+        "title": "ROS2参数默认值",
+        "content": "节点启动时可通过`--ros-args --params-file config/params.yaml`指定参数文件，默认值可在代码中定义。",
+        "categories": ["参数管理", "启动文件"],
+        "related_terms": ["params-file", "默认值"],
+        "references": ["知识库条目1"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 14,
+        "title": "ROS2控制器加载与卸载",
+        "content": "加载控制器：`ros2 control load_controller joint_state_controller`；卸载：`ros2 control unload_controller joint_state_controller`。",
+        "categories": ["机器人控制", "控制器管理"],
+        "related_terms": ["ros2 control", "加载控制器"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 15,
+        "title": "ROS2调试工具推荐",
+        "content": "使用`rqt_graph`可视化节点拓扑，`rqt_console`查看日志，`rviz2`可视化机器人状态。",
+        "categories": ["调试工具", "可视化"],
+        "related_terms": ["rqt工具", "rviz2"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 16,
+        "title": "ROS2参数监听机制",
+        "content": "通过`ros2 param get`实时获取参数值，或编写节点订阅`/parameter_events`话题监听参数变化。",
+        "categories": ["参数监控", "事件监听"],
+        "related_terms": ["parameter_events", "监听参数"],
+        "references": ["知识库条目1"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 17,
+        "title": "ROS2系统中文输入法配置",
+        "content": "安装搜狗输入法需先配置Fcitx4，解决中文输入问题：`sudo apt install libgsettings-qt1`。",
+        "categories": ["系统配置", "输入法"],
+        "related_terms": ["Fcitx", "搜狗输入法"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 18,
+        "title": "ROS2控制器配置文件路径",
+        "content": "控制器配置文件通常位于`/etc/ros/<distro>/control/<controller>.yaml`或包内`config/`目录。",
+        "categories": ["配置文件", "路径管理"],
+        "related_terms": ["配置文件路径", "control目录"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 19,
+        "title": "ROS2系统升级与维护",
+        "content": "定期更新系统：`sudo apt update && sudo apt upgrade`，修复依赖问题：`sudo apt --fix-broken install`。",
+        "categories": ["系统维护", "依赖管理"],
+        "related_terms": ["系统更新", "依赖修复"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 20,
+        "title": "ROS2参数调试最佳实践",
+        "content": "建议将参数分组（如`~/{group_name}/param`）并添加描述，使用`ros2 param describe`查看参数元数据。",
+        "categories": ["参数管理", "调试技巧"],
+        "related_terms": ["参数分组", "ros2 param describe"],
+        "references": ["知识库条目1"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 21,
+        "title": "ROS2服务调用基础",
+        "content": "服务（Service）是请求-响应通信机制。通过`ros2 service call`命令调用服务，例如：`ros2 service call /reset turtlesim/srv/Reset '{x: 2, y: 2}'`。",
+        "categories": ["ROS2通信", "服务机制"],
+        "related_terms": ["ros2 service call", "请求-响应"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 22,
+        "title": "ROS2动作接口（Action）",
+        "content": "动作（Action）是带有反馈的长时间操作，如移动机器人到目标点。使用`rclpy`或`rclcpp`实现动作客户端和服务端。",
+        "categories": ["ROS2通信", "动作机制"],
+        "related_terms": ["动作客户端", "反馈机制"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 23,
+        "title": "ROS2节点开发流程",
+        "content": "开发节点需创建包、编写代码（Python/Cpp）、配置`setup.py`或`CMakeLists.txt`，最后通过`colcon build`编译。",
+        "categories": ["开发指南", "节点开发"],
+        "related_terms": ["colcon build", "包结构"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 24,
+        "title": "ROS2话题速率控制",
+        "content": "通过`rclcpp::Rate`（C++）或`Rate`（Python）控制节点循环频率，例如：`rate = rospy.Rate(10)`设置10Hz。",
+        "categories": ["节点开发", "时间管理"],
+        "related_terms": ["循环频率", "rclcpp::Rate"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 25,
+        "title": "ROS2安全性配置",
+        "content": "启用安全通信需配置加密密钥和证书，使用`--enclave秘钥`参数启动节点，并设置环境变量`RMW_SECURITY`。",
+        "categories": ["系统配置", "安全性"],
+        "related_terms": ["安全通信", "RMW_SECURITY"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 26,
+        "title": "ROS2多机通信设置",
+        "content": "跨机器通信需配置`ROS_DOMAIN_ID`和`ROS_MASTER_URI`，确保网络可达性并使用`ssh`隧道转发端口。",
+        "categories": ["网络配置", "分布式系统"],
+        "related_terms": ["ROS_DOMAIN_ID", "ssh隧道"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 27,
+        "title": "ROS2调试日志级别",
+        "content": "通过环境变量`RMW_LOG_LEVEL`设置日志级别（如`RMW_LOG_LEVEL=DEBUG`），或使用`--ros-args --log-level DEBUG`启动节点。",
+        "categories": ["调试工具", "日志管理"],
+        "related_terms": ["日志级别", "RMW_LOG_LEVEL"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 28,
+        "title": "ROS2传感器数据处理",
+        "content": "处理传感器数据（如LIDAR）需订阅对应话题（如`/scan`），并使用回调函数实时解析消息（`sensor_msgs/msg/LaserScan`）。",
+        "categories": ["传感器集成", "数据处理"],
+        "related_terms": ["LaserScan", "传感器数据"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 29,
+        "title": "ROS2仿真工具Gazebo集成",
+        "content": "通过`ros2 run gazebo_ros gzclient`启动Gazebo，使用`ros_ign`包实现Ignition与ROS2的通信。",
+        "categories": ["仿真工具", "Gazebo"],
+        "related_terms": ["Gazebo", "ros_ign"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 30,
+        "title": "ROS2内存泄漏排查",
+        "content": "使用`valgrind`工具分析内存泄漏：`valgrind --tool=memcheck ros2 run <package> <node>`。",
+        "categories": ["性能优化", "调试技巧"],
+        "related_terms": ["valgrind", "内存泄漏"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 31,
+        "title": "ROS2参数继承机制",
+        "content": "参数可继承父节点组（如`~group_name/param`），通过`ros2 param set /node_name/group_name/param value`设置分组参数。",
+        "categories": ["参数管理", "分组参数"],
+        "related_terms": ["参数继承", "分组参数"],
+        "references": ["知识库条目1"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 32,
+        "title": "ROS2话题传输优化",
+        "content": "使用`rmw_implementation`（如`rmw_fastrtps_cpp`）优化通信性能，通过设置`RMW_QOS_PROFILE`调整QoS策略。",
+        "categories": ["性能优化", "通信协议"],
+        "related_terms": ["QoS", "rmw_implementation"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 33,
+        "title": "ROS2节点热更新",
+        "content": "通过`ros2 node kill <node_name>`重启节点实现配置热更新，或使用动态参数修改无需重启。",
+        "categories": ["系统管理", "热更新"],
+        "related_terms": ["节点重启", "热更新"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 34,
+        "title": "ROS2消息序列化格式",
+        "content": "ROS2支持多种序列化格式（如`cdr`、`fastcdr`），通过`ROS_DOMAIN_ID`和`RMW_IMPLEMENTATION`配置。",
+        "categories": ["通信协议", "消息格式"],
+        "related_terms": ["序列化", "RMW_IMPLEMENTATION"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 35,
+        "title": "ROS2参数动态加载",
+        "content": "节点可通过`declare_parameter`声明参数，并在运行时通过`get_parameter`获取最新值。",
+        "categories": ["参数管理", "动态加载"],
+        "related_terms": ["declare_parameter", "get_parameter"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 36,
+        "title": "ROS2系统日志分析",
+        "content": "使用`ros2 bag record`录制日志，通过`ros2 bag play`回放并分析系统行为。",
+        "categories": ["调试工具", "日志分析"],
+        "related_terms": ["ros2 bag", "日志回放"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 37,
+        "title": "ROS2多线程开发",
+        "content": "通过`rclcpp::executors`（如`MultiThreadedExecutor`）实现多线程处理多个回调。",
+        "categories": ["节点开发", "多线程"],
+        "related_terms": ["MultiThreadedExecutor", "线程管理"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      },
+      {
+        "id": 38,
+        "title": "ROS2硬件接口配置",
+        "content": "配置硬件接口（如URDF中的`<gazebo>`标签）需指定驱动插件和参数，确保与控制器兼容。",
+        "categories": ["硬件集成", "URDF配置"],
+        "related_terms": ["URDF", "硬件驱动"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 39,
+        "title": "ROS2系统资源监控",
+        "content": "使用`htop`或`top`监控CPU/内存占用，通过`ros2 topic hz`查看话题频率是否达标。",
+        "categories": ["性能监控", "系统资源"],
+        "related_terms": ["资源监控", "话题频率"],
+        "references": ["知识库条目2"],
+        "source": "知识库条目2"
+      },
+      {
+        "id": 40,
+        "title": "ROS2最佳实践：代码复用",
+        "content": "通过`ROS2包依赖`和`Python模块`实现代码复用，避免重复开发通用功能。",
+        "categories": ["开发规范", "代码优化"],
+        "related_terms": ["包依赖", "代码复用"],
+        "references": ["ROS2官方文档"],
+        "source": "知识库条目1"
+      }
+    ]
+  }
