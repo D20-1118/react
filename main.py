@@ -11,13 +11,17 @@ from fastapi.middleware.cors import CORSMiddleware
 # 初始化组件
 app = FastAPI()
 
-# 添加CORS配置
+# 允许所有来源的跨域请求
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 允许所有来源（生产环境应限制）
-    allow_methods=["POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
-    expose_headers=["Content-Type"]
+    # 允许所有来源的跨域请求，你也可以设置为具体的域名来限制请求来源
+    allow_origins=["*"],
+    # 参数设置为True表示允许携带身份凭证，如cookies
+    allow_credentials=True,
+    # 表示允许所有HTTP方法的请求
+    allow_methods=["*"],
+    # 表示允许所有请求头
+    allow_headers=["*"]
 )
 
 # 配置日志
@@ -26,8 +30,6 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-# 初始化组件
-app = FastAPI()
 
 # OpenAI客户端配置
 key = 'sk-bOBUTf38jTU2TDza2nz1cAR8QETryCcI2W1vGTNmZybyUZjL'
@@ -42,6 +44,19 @@ client = OpenAI(
 milvus_host = os.getenv("MILVUS_HOST", "localhost")  
 connections.connect(host=milvus_host, port=19530)
 collection = Collection("ros_knowledge")
+
+# 新增加载集合的代码
+def load_collection():
+    try:
+        if not collection.has_index():
+            raise ValueError("Collection has no index")
+        collection.load()
+        logging.info("Collection loaded successfully")
+    except Exception as e:
+        logging.error(f"Failed to load collection: {str(e)}")
+        raise
+
+load_collection()  # 启动时加载集合
 
 def get_embedding(text: str) -> list:
     """使用OpenAI生成文本嵌入"""
@@ -62,7 +77,8 @@ def search_knowledge(prompt: str, top_k: int = 3) -> list:
         query_vec = get_embedding(prompt)
         
         # Milvus检索（注意metric_type应与索引类型匹配）
-        search_params = {"metric_type": "COSINE", "params": {"nprobe": 10}} 
+        search_params = {"metric_type": "L2", "params": {"nprobe": 10}}
+ 
         results = collection.search(
             data=[query_vec],
             anns_field="embedding",
@@ -93,13 +109,14 @@ async def chat_endpoint(prompt_data: dict):
         
         # 构建增强prompt
         enhanced_prompt = (
-            "你是一个ROS2专家,请严格根据以下知识回答：/n"
+            "你是一个ROS2专家,但如果我没有提到ros相关信息,你可以忽略这个身份,正常回答,若涉及ros信息,请严格根据以下知识回答：/n"
             f"{'/n'.join(context)}/n/n"
             f"问题：{prompt}/n"
             "回答要求：/n"
-            "1. 使用中文/n"
-            "2. 包含具体命令示例/n"
-            "3. 标注知识来源ID(如【来源1】)"
+            "1. 若在 Milvus 中未能检索到合适的ROS2相关知识,就忽略以下要求/n"
+            "2. 使用中文/n"
+            "3. 包含具体命令示例/n"
+            "4. 标注知识来源ID(如【来源1】)"
         )
         
         # 调用Qwen-Turbo
